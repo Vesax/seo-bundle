@@ -1,0 +1,13 @@
+{
+    "name": "vesax/seo-bundle",
+    "authors": [
+        {
+            "name": "Artur Vesker",
+            "email": "arturvesker@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+      "psr-4": { "Vesax\\SEOBundle\\": "" }
+    }
+}

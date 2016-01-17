@@ -1,0 +1,10 @@
+{% extends base_template %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block form %}
+    {{ form_start(form) }}
+        {{ form_rest(form) }}
+        <button class="btn btn-success" type="submit">Сохранить</button>
+    {{ form_end(form) }}
+{% endblock %}

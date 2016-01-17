@@ -1,0 +1,4 @@
+<!-- Generated Seo Tags at {{ compiledAt }} -->
+{% for tag in tags %}
+    <meta {% if tag.name %}name="{{ tag.name }}"{% endif %}{% if tag.property %} property="{{ tag.property }}"{% endif %} content="{{ tag.content }}">
+{% endfor %}

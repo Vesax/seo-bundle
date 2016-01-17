@@ -1,0 +1,43 @@
+services:
+    vesax.seo.doctrine_rules_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - Vesax\SEOBundle\Entity\Rule
+
+    vesax.seo.rules_provider_doctrine:
+        class: Vesax\SEOBundle\Rule\DoctrineRulesProvider
+        arguments:
+            - @vesax.seo.doctrine_rules_repository
+
+    vesax.seo.compiler:
+        class: Vesax\SEOBundle\Metadata\Compiler\Compiler
+        arguments:
+            - @twig
+
+    vesax.seo.metadata_factory:
+        class: Vesax\SEOBundle\Metadata\MetadataFactory
+        arguments:
+            - @vesax.seo.rules_provider_doctrine
+            - @vesax.seo.compiler
+            - @?vesax.seo.metadata_cache
+
+    vesax.seo.twig_extension:
+        class: Vesax\SEOBundle\Twig\Extension\SEOExtension
+        arguments:
+            - @vesax.seo.metadata_factory
+            - @request_stack
+        tags:
+            - { name: twig.extension }
+
+    vesax.seo.admin.metadata:
+        class: Vesax\SEOBundle\Admin\RuleAdmin
+        arguments: [~, Vesax\SEOBundle\Entity\Rule, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: SEO, label: Metadata }
+
+    vesax.seo.admin.menu_listener:
+        class: Vesax\SEOBundle\EventListener\ConfigureAdminMenuListener
+        tags:
+            - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: configureMenu }
