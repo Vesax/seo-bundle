@@ -5,6 +5,7 @@ namespace Vesax\SEOBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Class MetaTagType
@@ -25,6 +26,14 @@ class MetaTagType extends AbstractType
             ->add('content', 'text', ['required' => true])
             ->add('property', 'text', ['required' => false])
         ;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**
