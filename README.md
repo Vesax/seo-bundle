@@ -14,19 +14,12 @@ AppKernel.php:
 $bundles = [
    new \Vesax\SEOBundle\VesaxSEOBundle()
 ];
-
+```
 
 # Использование #
-
 ```
-#!twig
-
 {% set seoData = seo_load() %}
-
 {{ seo_title(seoData) }} # render title for current page
-
 {{ seo_meta_tags(seoData) }} # render metatags for current page
-
 {{ seo_extra(seoData, 'my-extra-item-key') }} # get extra data for current page
-
 ```
