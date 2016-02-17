@@ -16,7 +16,7 @@ $bundles = [
 ];
 ```
 
-# Использование #
+# Usage
 ```
 {% set seoData = seo_load() %}
 {{ seo_title(seoData) }} # render title for current page
