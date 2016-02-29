@@ -4,6 +4,7 @@ namespace Vesax\SEOBundle\EventListener;
 
 use Doctrine\Common\Cache\Cache;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Vesax\SEOBundle\Matcher\RedirectRuleMatcher;
@@ -52,20 +53,23 @@ class RedirectListener implements EventSubscriberInterface
      */
     public function onRequest(GetResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        $path = $event->getRequest()->getPathInfo();
+
+        if (!$rule = $this->getRuleForPath($path)) {
             return;
         }
 
-        if (!$rule = $this->getRuleForPath($event->getRequest()->getPathInfo())) {
-            return;
+        if ($this->cache) {
+            $this->cache->save($path, $rule);
         }
 
-
-
-        dump($rule);
-        die();
+        $event->setResponse(new RedirectResponse($rule->getDestination(), $rule->getCode()));
     }
 
+    /**
+     * @param $path
+     * @return null|\Vesax\SEOBundle\RedirectRule\RedirectRuleInterface
+     */
     private function getRuleForPath($path)
     {
         if ($this->cache) {

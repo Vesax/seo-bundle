@@ -61,7 +61,14 @@ class RedirectRuleAdmin extends Admin
         $formMapper
             ->add('sourceTemplate', new UrlPatternType(), ['sonata_help' => $this->getPatternHelp()])
             ->add('destination', 'text', ['required' => false, 'sonata_help' => 'Новый адрес'])
-            ->add('code', 'text')
+            ->add('code', 'choice', ['choices' => [
+                '201' => '201 Created',
+                '301' => '301 Moved Permanently',
+                '302' => '302 Found',
+                '303' => '303 See Other',
+                '307' => '307 Temporary Redirect',
+                '308' => '308 Permanent Redirect'
+            ]])
             ->add('priority', 'text', ['sonata_help' => 'Приоритет правила. Если url соответстует нескольким правилам, то применяется правило с наибольшим приоритетом'])
         ;
     }

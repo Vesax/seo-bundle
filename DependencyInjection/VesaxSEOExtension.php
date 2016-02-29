@@ -41,6 +41,17 @@ class VesaxSEOExtension extends Extension
             $redirectListenerDefinition->addTag('kernel.event_subscriber');
 
             $container->setDefinition('vesax.seo.redirect_listener', $redirectListenerDefinition);
+
+            $redirectAdminDefinition = new Definition('Vesax\SEOBundle\Admin\RedirectRuleAdmin', [
+                null,
+                "Vesax\\SEOBundle\\Entity\\RedirectRule",
+                "SonataAdminBundle:CRUD"
+            ]);
+
+            $redirectAdminDefinition
+                ->addTag('sonata.admin', ['manager_type' => 'orm', 'group' => 'SEO', 'label' => 'Redirect Rules']);
+
+            $container->setDefinition('vesax.seo.admin.rediect_rule', $redirectAdminDefinition);
         }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
