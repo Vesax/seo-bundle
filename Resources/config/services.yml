@@ -6,6 +6,12 @@ services:
         arguments:
             - Vesax\SEOBundle\Entity\Rule
 
+    vesax.seo.redirect_rule_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: [@doctrine.orm.entity_manager, getRepository]
+        arguments:
+            - Vesax\SEOBundle\Entity\RedirectRule
+
     vesax.seo.rules_provider_doctrine:
         class: Vesax\SEOBundle\Rule\DoctrineRulesProvider
         arguments:
@@ -31,11 +37,17 @@ services:
         tags:
             - { name: twig.extension }
 
-    vesax.seo.admin.metadata:
+    vesax.seo.admin.rule:
         class: Vesax\SEOBundle\Admin\RuleAdmin
         arguments: [~, Vesax\SEOBundle\Entity\Rule, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: SEO, label: Metadata }
+            - { name: sonata.admin, manager_type: orm, group: SEO, label: Page Rules }
+
+    vesax.seo.admin.rediect_rule:
+        class: Vesax\SEOBundle\Admin\RedirectRuleAdmin
+        arguments: [~, Vesax\SEOBundle\Entity\RedirectRule, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: SEO, label: Redirect Rules }
 
     vesax.seo.admin.menu_listener:
         class: Vesax\SEOBundle\EventListener\ConfigureAdminMenuListener

@@ -22,7 +22,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('cache')->defaultNull()->end();
+                ->scalarNode('cache')->defaultNull()->end()
+                ->booleanNode('redirects')->defaultFalse()->end()
+            ->end();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

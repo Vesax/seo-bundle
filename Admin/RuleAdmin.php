@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\CallbackTransformer;
 use Vesax\SEOBundle\Form\Type\ExtraDataType;
 use Vesax\SEOBundle\Form\Type\MetaTagType;
+use Vesax\SEOBundle\Form\Type\UrlPatternType;
 
 /**
  * Class RuleAdmin.
@@ -55,32 +56,10 @@ class RuleAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $url = $formMapper
-                ->create('pattern', 'text', ['sonata_help' => $this->getPatternHelp()])
-                ->addModelTransformer(new CallbackTransformer(
-                    function ($value) {
-                        return $value;
-                    },
-                    function ($value) {
-                        $normalized = parse_url($value, PHP_URL_PATH);
-
-                        if (strpos($normalized, '/app_dev.php') !== false) {
-                            $normalized = substr($normalized, 12);
-                        }
-
-                        if ($query = parse_url($value, PHP_URL_QUERY)) {
-                            $normalized .= '?' . $query;
-                        }
-
-                        return $normalized;
-                    }
-                ));
-
-
         $formMapper
             ->tab('General')
                 ->with('Основные настройки правила')
-                    ->add($url)
+                    ->add('pattern', new UrlPatternType(), ['sonata_help' => $this->getPatternHelp()])
                     ->add('title', 'text', ['required' => false, 'sonata_help' => 'Заголовок сайта, отображается в тегах &lt;title&gt;&lt;/title&gt;'])
                     ->add('priority', 'text', ['sonata_help' => 'Приоритет правила. Если url соответстует нескольким правилам, то применяется правило с наибольшим приоритетом'])
                 ->end()
