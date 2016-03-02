@@ -59,10 +59,6 @@ class RedirectListener implements EventSubscriberInterface
             return;
         }
 
-        if ($this->cache) {
-            $this->cache->save($path, $rule);
-        }
-
         $event->setResponse(new RedirectResponse($rule->getDestination(), $rule->getCode()));
     }
 
@@ -81,6 +77,10 @@ class RedirectListener implements EventSubscriberInterface
         $rule = $this->redirectRuleMatcher->match($path, $this->redirectRuleRepository->findAllSortedByPriority());
 
         if (!$rule) {
+            return null;
+        }
+
+        if ($rule->isStopped()) {
             return null;
         }
 

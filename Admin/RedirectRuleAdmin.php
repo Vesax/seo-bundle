@@ -36,6 +36,7 @@ class RedirectRuleAdmin extends Admin
             ->add('destination')
             ->add('code')
             ->add('priority')
+            ->add('stopped')
         ;
     }
 
@@ -50,6 +51,7 @@ class RedirectRuleAdmin extends Admin
             ->add('destination')
             ->addIdentifier('code')
             ->addIdentifier('priority')
+            ->add('stopped')
         ;
     }
 
@@ -69,6 +71,7 @@ class RedirectRuleAdmin extends Admin
                 '307' => '307 Temporary Redirect',
                 '308' => '308 Permanent Redirect'
             ]])
+            ->add('stopped')
             ->add('priority', 'text', ['sonata_help' => 'Приоритет правила. Если url соответстует нескольким правилам, то применяется правило с наибольшим приоритетом'])
         ;
     }

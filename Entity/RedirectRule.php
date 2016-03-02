@@ -56,8 +56,10 @@ class RedirectRule implements RedirectRuleInterface
 
     /**
      * @var bool
+     *
+     * @ORM\Column(type="boolean")
      */
-    protected $stopped;
+    protected $stopped = false;
 
     /**
      * @return string
@@ -148,6 +150,17 @@ class RedirectRule implements RedirectRuleInterface
      */
     public function isStopped()
     {
-        // TODO: Implement isStopped() method.
+        return $this->stopped;
+    }
+
+    /**
+     * @param boolean $stopped
+     * @return self
+     */
+    public function setStopped($stopped)
+    {
+        $this->stopped = $stopped;
+
+        return $this;
     }
 }
