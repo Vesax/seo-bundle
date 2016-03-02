@@ -11,3 +11,9 @@ meta_taglabel__: Мета-тег
 extra_fieldlabel__: Дополнительное поле
 Pattern: Шаблон
 Priority: Приоритет
+Redirect Rules: Правила редиректов
+Page Rules: Правила страниц
+Source Template: Шаблон источника
+Destination: Назначение
+Code: Код
+Stopped: Остановлен
