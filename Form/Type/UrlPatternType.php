@@ -53,7 +53,7 @@ class UrlPatternType extends AbstractType
      */
     public function getName()
     {
-        return self::class;
+        return 'url_pattern';
     }
 
 
