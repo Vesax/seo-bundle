@@ -29,6 +29,8 @@ $bundles = [
 ## Configration (optional)
 ```
 vesax_seo:
-    redirects: false # Redirects feature disabled by default
+    redirects: 
+      enabled: false # Redirects feature disabled by default
+      not_found_only: true # Redirect listener only for NotFoundhttpException by default
     cache: my_doctrine_cache_provider_name # Cache for rules and metadata. Disabled by default
 ```
