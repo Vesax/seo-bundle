@@ -26,7 +26,7 @@ $bundles = [
 {{ seo_extra(seoData, 'my-extra-item-key') }} # get extra data for current page
 ```
 
-## Configration (optional)
+## Configuration (optional)
 ```
 vesax_seo:
     redirects: 
