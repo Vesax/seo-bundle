@@ -48,4 +48,13 @@ class UrlPatternType extends AbstractType
         return 'text';
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getName()
+    {
+        return 'url_pattern';
+    }
+
+
 }
