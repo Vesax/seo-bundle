@@ -29,7 +29,7 @@ class VesaxSEOExtension extends Extension
             $container->setAlias('vesax.seo.metadata_cache', 'doctrine_cache.providers.' . $config['cache']);
         }
 
-        if ($config['redirects']) {
+        if ($config['redirects']['enabled']) {
             $container->setDefinition('vesax.seo.redirect_matcher', new Definition('Vesax\SEOBundle\Matcher\RedirectRuleMatcher'));
 
             $redirectListenerDefinition = new Definition('Vesax\SEOBundle\EventListener\RedirectListener', [
@@ -38,7 +38,12 @@ class VesaxSEOExtension extends Extension
                 new Reference('vesax.seo.metadata_cache', ContainerInterface::NULL_ON_INVALID_REFERENCE)
             ]);
 
-            $redirectListenerDefinition->addTag('kernel.event_subscriber');
+            if ($config['redirects']['not_found_only']) {
+                $redirectListenerDefinition->addTag('kernel.event_listener', ['event' => 'kernel.exception', 'method' => 'onException']);
+            } else {
+                $redirectListenerDefinition->addTag('kernel.event_listener', ['event' => 'kernel.request', 'method' => 'onRequest']);
+            }
+
 
             $container->setDefinition('vesax.seo.redirect_listener', $redirectListenerDefinition);
 

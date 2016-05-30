@@ -22,8 +22,14 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('redirects')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('enabled')->defaultFalse()->end()
+                        ->booleanNode('not_found_only')->defaultTrue()->end()
+                    ->end()
+                ->end()
                 ->scalarNode('cache')->defaultNull()->end()
-                ->booleanNode('redirects')->defaultFalse()->end()
             ->end();
 
         // Here you should define the parameters that are allowed to

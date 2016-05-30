@@ -5,7 +5,10 @@ namespace Vesax\SEOBundle\EventListener;
 use Doctrine\Common\Cache\Cache;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Vesax\SEOBundle\Matcher\RedirectRuleMatcher;
 use Vesax\SEOBundle\RedirectRule\RedirectRuleRepositoryInterface;
@@ -41,7 +44,11 @@ class RedirectListener implements EventSubscriberInterface
      * @param RedirectRuleMatcher $redirectRuleMatcher
      * @param Cache $cache
      */
-    public function __construct(RedirectRuleRepositoryInterface $redirectRuleRepository, RedirectRuleMatcher $redirectRuleMatcher, Cache $cache = null)
+    public function __construct(
+        RedirectRuleRepositoryInterface $redirectRuleRepository,
+        RedirectRuleMatcher $redirectRuleMatcher,
+        Cache $cache = null
+    )
     {
         $this->redirectRuleRepository = $redirectRuleRepository;
         $this->redirectRuleMatcher = $redirectRuleMatcher;
@@ -53,13 +60,51 @@ class RedirectListener implements EventSubscriberInterface
      */
     public function onRequest(GetResponseEvent $event)
     {
-        $path = $event->getRequest()->getPathInfo();
-
-        if (!$rule = $this->getRuleForPath($path)) {
+        if (!$event->isMasterRequest()) {
             return;
         }
 
-        $event->setResponse(new RedirectResponse($rule->getDestination(), $rule->getCode()));
+        if (!$redirect = $this->getRedirectForRequest($event->getRequest())) {
+            return;
+        }
+
+        $event->setResponse($redirect);
+    }
+
+
+    /**
+     * @param GetResponseForExceptionEvent $event
+     */
+    public function onException(GetResponseForExceptionEvent $event)
+    {
+        if (!$event->getException() instanceof NotFoundHttpException) {
+            return;
+        }
+
+        if (!$event->isMasterRequest()) {
+            return;
+        }
+
+        if (!$redirect = $this->getRedirectForRequest($event->getRequest())) {
+            return;
+        }
+
+        $event->setResponse($redirect);
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    protected function getRedirectForRequest(Request $request)
+    {
+        $path = $request->getPathInfo();
+
+        if (!$rule = $this->getRuleForPath($path)) {
+            return null;
+        }
+
+        return new RedirectResponse($rule->getDestination(), $rule->getCode());
     }
 
     /**
