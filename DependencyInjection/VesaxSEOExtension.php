@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Vesax\SEOBundle\Entity\Rule;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -57,6 +58,32 @@ class VesaxSEOExtension extends Extension
                 ->addTag('sonata.admin', ['manager_type' => 'orm', 'group' => 'SEO', 'label' => 'Redirect Rules']);
 
             $container->setDefinition('vesax.seo.admin.rediect_rule', $redirectAdminDefinition);
+        }
+
+        if ($config['robots']) {
+            $menuListenerDefinition = new Definition('Vesax\SEOBundle\EventListener\ConfigureAdminMenuListener');
+            $menuListenerDefinition->addTag('kernel.event_listener', [
+                'event' => 'sonata.admin.event.configure.menu.sidebar',
+                'method' => 'configureMenu'
+            ]);
+
+            $container->setDefinition('vesax.seo.admin.menu_listener', $menuListenerDefinition);
+        }
+
+        if ($config['meta']) {
+            $metaAdminDefinition = new Definition('Vesax\SEOBundle\Admin\RuleAdmin', [
+                null,
+                Rule::class,
+                'SonataAdminBundle:CRUD'
+            ]);
+
+            $metaAdminDefinition->addTag('sonata.admin', [
+                'manager_type' => 'orm',
+                'group' => 'SEO',
+                'label' => 'Page Rules'
+            ]);
+
+            $container->setDefinition('vesax.seo.admin.rule', $metaAdminDefinition);
         }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

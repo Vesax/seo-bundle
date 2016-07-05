@@ -1,0 +1,3 @@
+form_priority_description: "Rule priority"
+form_pattern_description: "Url template. Example: /news/{*}"
+form_destination_description: "Target url"

@@ -37,13 +37,3 @@ services:
         tags:
             - { name: twig.extension }
 
-    vesax.seo.admin.rule:
-        class: Vesax\SEOBundle\Admin\RuleAdmin
-        arguments: [~, Vesax\SEOBundle\Entity\Rule, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: SEO, label: Page Rules }
-
-    vesax.seo.admin.menu_listener:
-        class: Vesax\SEOBundle\EventListener\ConfigureAdminMenuListener
-        tags:
-            - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: configureMenu }

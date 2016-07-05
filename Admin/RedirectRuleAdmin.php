@@ -46,7 +46,6 @@ class RedirectRuleAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('id')
             ->addIdentifier('sourceTemplate')
             ->add('destination')
             ->addIdentifier('code')
@@ -62,17 +61,19 @@ class RedirectRuleAdmin extends Admin
     {
         $formMapper
             ->add('sourceTemplate', new UrlPatternType(), ['sonata_help' => $this->getPatternHelp()])
-            ->add('destination', 'text', ['required' => false, 'sonata_help' => 'Новый адрес'])
+            ->add('destination', 'text', ['required' => false, 'sonata_help' => $this->trans('form_destination_description', [], 'VesaxSEOBundle')])
             ->add('code', 'choice', ['choices' => [
-                '201' => '201 Created',
-                '301' => '301 Moved Permanently',
                 '302' => '302 Found',
+                '301' => '301 Moved Permanently',
+                '201' => '201 Created',
                 '303' => '303 See Other',
                 '307' => '307 Temporary Redirect',
                 '308' => '308 Permanent Redirect'
             ]])
-            ->add('stopped')
-            ->add('priority', 'text', ['sonata_help' => 'Приоритет правила. Если url соответстует нескольким правилам, то применяется правило с наибольшим приоритетом'])
+            ->add('stopped', null, ['required' => false])
+            ->add('priority', 'text', [
+                'sonata_help' => $this->trans('form_priority_description', [], 'VesaxSEOBundle')
+            ])
         ;
     }
 
@@ -83,8 +84,7 @@ class RedirectRuleAdmin extends Admin
      */
     private function getPatternHelp()
     {
-        return "Шаблон url, для которого будет выполняться это правило. Новые правила приоритетнее старых.<br>Поддерживаемые маркеры:<ul><li>{*} - любая последовательность любой длины. Пример: /news/{*}</li></ul>
-        Добавление/обновление/удаление правила вызовет очистку кеша. Для сохранения производительности сайта рекомендуется обновлять правило пакетно.";
+        return $this->trans('form_pattern_description', [], 'VesaxSEOBundle');
     }
 
     /**

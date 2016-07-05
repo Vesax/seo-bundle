@@ -22,6 +22,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->booleanNode('robots')->defaultTrue()->end()
+                ->booleanNode('meta')->defaultTrue()->end()
                 ->arrayNode('redirects')
                     ->addDefaultsIfNotSet()
                     ->children()
