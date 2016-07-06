@@ -39,13 +39,12 @@ class VesaxSEOExtension extends Extension
                 new Reference('vesax.seo.metadata_cache', ContainerInterface::NULL_ON_INVALID_REFERENCE)
             ]);
 
-            if ($config['redirects']['not_found_only']) {
-                $redirectListenerDefinition->addTag('kernel.event_listener', ['event' => 'kernel.exception', 'method' => 'onException']);
-            } else {
+            $redirectListenerDefinition->addTag('kernel.event_listener', ['event' => 'kernel.exception', 'method' => 'onException']);
+
+            if (!$config['redirects']['not_found_only']) {
                 $redirectListenerDefinition->addTag('kernel.event_listener', ['event' => 'kernel.request', 'method' => 'onRequest']);
             }
-
-
+            
             $container->setDefinition('vesax.seo.redirect_listener', $redirectListenerDefinition);
 
             $redirectAdminDefinition = new Definition('Vesax\SEOBundle\Admin\RedirectRuleAdmin', [
