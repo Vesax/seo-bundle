@@ -3,15 +3,14 @@
 namespace Vesax\SEOBundle\EventListener;
 
 use Doctrine\Common\Cache\Cache;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\VarDumper\VarDumper;
 use Vesax\SEOBundle\Matcher\RedirectRuleMatcher;
-use Vesax\SEOBundle\RedirectRule\RedirectRuleRepositoryInterface;
+use Vesax\SEOBundle\RedirectRule\RedirectRuleManagerInterface;
 
 /**
  * Class RedirectListener
@@ -19,11 +18,11 @@ use Vesax\SEOBundle\RedirectRule\RedirectRuleRepositoryInterface;
  * @package Vesax\SEOBundle\EventListener
  * @author Artur Vesker
  */
-class RedirectListener implements EventSubscriberInterface
+class RedirectListener
 {
 
     /**
-     * @var RedirectRuleRepositoryInterface
+     * @var RedirectRuleManagerInterface
      */
     protected $redirectRuleRepository;
 
@@ -40,15 +39,11 @@ class RedirectListener implements EventSubscriberInterface
     /**
      * RedirectListener constructor.
      *
-     * @param RedirectRuleRepositoryInterface $redirectRuleRepository
+     * @param RedirectRuleManagerInterface $redirectRuleRepository
      * @param RedirectRuleMatcher $redirectRuleMatcher
      * @param Cache $cache
      */
-    public function __construct(
-        RedirectRuleRepositoryInterface $redirectRuleRepository,
-        RedirectRuleMatcher $redirectRuleMatcher,
-        Cache $cache = null
-    )
+    public function __construct(RedirectRuleManagerInterface $redirectRuleRepository, RedirectRuleMatcher $redirectRuleMatcher, Cache $cache = null)
     {
         $this->redirectRuleRepository = $redirectRuleRepository;
         $this->redirectRuleMatcher = $redirectRuleMatcher;
@@ -135,15 +130,4 @@ class RedirectListener implements EventSubscriberInterface
 
         return $rule;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getSubscribedEvents()
-    {
-        return [
-            KernelEvents::REQUEST => 'onRequest'
-        ];
-    }
-
 }

@@ -42,7 +42,11 @@ class VesaxSEOExtension extends Extension
             $redirectListenerDefinition->addTag('kernel.event_listener', ['event' => 'kernel.exception', 'method' => 'onException']);
 
             if (!$config['redirects']['not_found_only']) {
-                $redirectListenerDefinition->addTag('kernel.event_listener', ['event' => 'kernel.request', 'method' => 'onRequest']);
+                $redirectListenerDefinition->addTag('kernel.event_listener', [
+                    'event' => 'kernel.request',
+                    'method' => 'onRequest',
+                    'priority' => 99
+                ]);
             }
             
             $container->setDefinition('vesax.seo.redirect_listener', $redirectListenerDefinition);

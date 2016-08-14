@@ -3,12 +3,12 @@
 namespace Vesax\SEOBundle\Matcher\SyntaxHandler;
 
 /**
- * Class AnySymbolAnyCountHandler
+ * Class AsteriskHandler
  *
  * @package Vesax\SEOBundle\Matcher\SyntaxHandler
  * @author Artur Vesker
  */
-class AnySymbolAnyCountHandler implements SyntaxHandlerInterface
+class AsteriskHandler implements SyntaxHandlerInterface
 {
 
     /**

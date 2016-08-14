@@ -79,7 +79,7 @@ class RedirectRule implements RedirectRuleInterface
 
     /**
      * @param string $sourceTemplate
-     * @return self
+     * @return $this
      */
     public function setSourceTemplate($sourceTemplate)
     {
@@ -98,7 +98,7 @@ class RedirectRule implements RedirectRuleInterface
 
     /**
      * @param string $destination
-     * @return self
+     * @return $this
      */
     public function setDestination($destination)
     {
@@ -117,7 +117,7 @@ class RedirectRule implements RedirectRuleInterface
 
     /**
      * @param int $code
-     * @return self
+     * @return $this
      */
     public function setCode($code)
     {
@@ -136,7 +136,7 @@ class RedirectRule implements RedirectRuleInterface
 
     /**
      * @param int $priority
-     * @return self
+     * @return $this
      */
     public function setPriority($priority)
     {
@@ -155,7 +155,7 @@ class RedirectRule implements RedirectRuleInterface
 
     /**
      * @param boolean $stopped
-     * @return self
+     * @return $this
      */
     public function setStopped($stopped)
     {

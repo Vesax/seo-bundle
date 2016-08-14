@@ -63,6 +63,13 @@ class Rule implements RuleInterface
      */
     protected $priority = 0;
 
+    /**
+     * Rule constructor.
+     * @param string $pattern
+     * @param string $title
+     * @param array $metaTags
+     * @param array $extra
+     */
     public function __construct($pattern = null, $title = null, $metaTags = [], $extra = [])
     {
         $this->pattern = $pattern;
@@ -89,7 +96,7 @@ class Rule implements RuleInterface
 
     /**
      * @param string $pattern
-     * @return self
+     * @return $this
      */
     public function setPattern($pattern)
     {
@@ -108,7 +115,7 @@ class Rule implements RuleInterface
 
     /**
      * @param string $title
-     * @return self
+     * @return $this
      */
     public function setTitle($title)
     {
@@ -127,7 +134,7 @@ class Rule implements RuleInterface
 
     /**
      * @param array $metaTags
-     * @return self
+     * @return $this
      */
     public function setMetaTags($metaTags)
     {
@@ -150,7 +157,7 @@ class Rule implements RuleInterface
 
     /**
      * @param array $extra
-     * @return self
+     * @return $this
      */
     public function setExtra(array $extra)
     {
@@ -173,7 +180,7 @@ class Rule implements RuleInterface
 
     /**
      * @param int $priority
-     * @return self
+     * @return $this
      */
     public function setPriority($priority)
     {

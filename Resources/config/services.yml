@@ -1,14 +1,13 @@
 services:
     vesax.seo.doctrine_rules_repository:
         class: Doctrine\ORM\EntityRepository
-        factory_service: doctrine.orm.entity_manager
-        factory_method: getRepository
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments:
             - Vesax\SEOBundle\Entity\Rule
 
     vesax.seo.redirect_rule_repository:
         class: Doctrine\ORM\EntityRepository
-        factory: [@doctrine.orm.entity_manager, getRepository]
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments:
             - Vesax\SEOBundle\Entity\RedirectRule
 
@@ -36,4 +35,3 @@ services:
             - @request_stack
         tags:
             - { name: twig.extension }
-

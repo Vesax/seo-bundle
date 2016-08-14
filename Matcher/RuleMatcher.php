@@ -2,7 +2,7 @@
 
 namespace Vesax\SEOBundle\Matcher;
 
-use Vesax\SEOBundle\Matcher\SyntaxHandler\AnySymbolAnyCountHandler;
+use Vesax\SEOBundle\Matcher\SyntaxHandler\AsteriskHandler;
 use Vesax\SEOBundle\Matcher\SyntaxHandler\SyntaxHandlerInterface;
 use Vesax\SEOBundle\Rule\RuleInterface;
 
@@ -25,7 +25,7 @@ class RuleMatcher
 
     public function __construct()
     {
-        $this->syntaxHandlers[] = new AnySymbolAnyCountHandler();
+        $this->syntaxHandlers[] = new AsteriskHandler();
     }
 
     /**

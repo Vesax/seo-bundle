@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
  * @package Vesax\SEOBundle\RedirectRule
  * @author Artur Vesker
  */
-class DoctrineRedirectRuleRepository extends EntityRepository implements RedirectRuleRepositoryInterface
+class DoctrineRedirectRuleRepository extends EntityRepository implements RedirectRuleManagerInterface
 {
 
     /**
@@ -19,6 +19,16 @@ class DoctrineRedirectRuleRepository extends EntityRepository implements Redirec
     public function findAllSortedByPriority()
     {
         return $this->findBy([], ['priority' => 'DESC']);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function save(RedirectRuleInterface $rule)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($rule);
+        $em->flush($rule);
     }
 
 }
