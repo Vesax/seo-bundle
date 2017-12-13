@@ -23,7 +23,7 @@ class ConfigureAdminMenuListener
             return;
         }
 
-        $seo->addChild('Настройки robots', ['route' => 'vesax.seo.admin.robots.edit']);
+        $seo->addChild('Configure robots', ['route' => 'vesax.seo.admin.robots.edit']);
     }
 
 }
