@@ -6,7 +6,9 @@
             "email": "arturvesker@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=5.5"
+    },
     "autoload": {
       "psr-4": { "Vesax\\SEOBundle\\": "" }
     }
