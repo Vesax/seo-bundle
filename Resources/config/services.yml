@@ -11,6 +11,11 @@ services:
         arguments:
             - Vesax\SEOBundle\Entity\RedirectRule
 
+    vesax.seo.redirect_rule.bulk_handler:
+        class: Vesax\SEOBundle\RedirectRule\BulkUploadHandler
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
     vesax.seo.rules_provider_doctrine:
         class: Vesax\SEOBundle\Rule\DoctrineRulesProvider
         arguments:

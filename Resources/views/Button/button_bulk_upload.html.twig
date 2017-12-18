@@ -1,0 +1,9 @@
+{% if admin.hasAccess('create') and admin.hasRoute('create') and admin.hasAccess('edit') and admin.hasRoute('edit') and admin.hasAccess('delete') and admin.hasRoute('delete') %}
+    <li>
+        <a class="sonata-action-element" href="{{ path('vesax.seo.admin.redirectrule.upload') }}">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            {{ 'link_action_bulk_upload'|trans({}, 'VesaxSEOBundle') }}
+        </a>
+    </li>
+{% endif %}

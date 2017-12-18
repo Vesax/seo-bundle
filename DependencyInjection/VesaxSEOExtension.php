@@ -57,10 +57,15 @@ class VesaxSEOExtension extends Extension
                 "SonataAdminBundle:CRUD"
             ]);
 
+            $redirectAdminDefinition->addMethodCall(
+                'setTemplate',
+                ['button_bulk_upload', 'VesaxSEOBundle:Button:button_bulk_upload.html.twig']
+            );
+
             $redirectAdminDefinition
                 ->addTag('sonata.admin', ['manager_type' => 'orm', 'group' => 'SEO', 'label' => 'Redirect Rules']);
 
-            $container->setDefinition('vesax.seo.admin.rediect_rule', $redirectAdminDefinition);
+            $container->setDefinition('vesax.seo.admin.redirect_rule', $redirectAdminDefinition);
         }
 
         if ($config['robots']) {

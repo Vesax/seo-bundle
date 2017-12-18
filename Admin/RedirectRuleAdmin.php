@@ -130,5 +130,25 @@ class RedirectRuleAdmin extends Admin
         }
     }
 
+    public function configureActionButtons($action, $object = null)
+    {
+        $list = parent::configureActionButtons($action, $object);
+
+        if (in_array($action, array('tree', 'show', 'edit', 'delete', 'list', 'batch'))
+            && $this->hasAccess('create')
+            && $this->hasAccess('edit')
+            && $this->hasAccess('delete')
+            && $this->hasRoute('create')
+            && $this->hasRoute('edit')
+            && $this->hasRoute('delete')
+        ) {
+            $list['bulk_upload'] = array(
+                'template' => $this->getTemplate('button_bulk_upload'),
+            );
+        }
+
+        return $list;
+    }
+
 
 }
